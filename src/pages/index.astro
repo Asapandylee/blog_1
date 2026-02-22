@@ -1,0 +1,61 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const latestPosts = posts.slice(0, 10);
+---
+
+<!doctype html>
+<html lang="ko">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main class="mx-auto max-w-xl px-4 py-8">
+			<!-- Intro -->
+			<section class="mb-2">
+				<h1 class="text-2xl font-bold mb-3">건설 현장에 AI를 입히다</h1>
+				<p class="text-[--color-ink-muted] dark:text-[--color-dark-ink-muted] leading-relaxed">
+					건설 엔지니어가 AI와 바이브코딩으로 현장의 문제를 해결하는 과정을 기록합니다.
+				</p>
+			</section>
+
+			<hr />
+
+			<!-- Recent Posts -->
+			<section>
+				<div class="flex items-center justify-between mb-4">
+					<h2 class="text-base font-semibold">최신 글</h2>
+					<a href="/blog" class="text-xs text-[--color-ink-faint] hover:text-[--color-link] dark:text-[--color-dark-ink-faint] dark:hover:text-[--color-dark-link] no-underline">전체 보기 →</a>
+				</div>
+				<ul class="space-y-5">
+					{latestPosts.map((post) => (
+						<li>
+							<a href={`/blog/${post.id}/`} class="group block no-underline">
+								<h3 class="text-[15px] font-medium text-[--color-ink] group-hover:text-[--color-link] dark:text-[--color-dark-ink] dark:group-hover:text-[--color-dark-link] transition-colors">
+									{post.data.title}
+								</h3>
+								<div class="mt-0.5 text-xs text-[--color-ink-faint] dark:text-[--color-dark-ink-faint]">
+									<FormattedDate date={post.data.pubDate} />
+								</div>
+								<p class="mt-1 text-sm text-[--color-ink-muted] dark:text-[--color-dark-ink-muted] leading-relaxed line-clamp-2">
+									{post.data.description}
+								</p>
+							</a>
+						</li>
+					))}
+				</ul>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>

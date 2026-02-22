@@ -1,0 +1,55 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+
+interface Props {
+	post: CollectionEntry<'blog'>;
+	featured?: boolean;
+}
+
+const { post, featured = false } = Astro.props;
+const { title, description, pubDate, heroImage, tags } = post.data;
+---
+
+<article class:list={[
+	'group overflow-hidden rounded-2xl border border-surface-200 bg-white transition-all duration-300 hover:border-primary-300 hover:shadow-lg dark:border-surface-800 dark:bg-surface-900 dark:hover:border-primary-700',
+	featured && 'sm:col-span-2'
+]}>
+	<a href={`/blog/${post.id}/`} class="block">
+		{heroImage && (
+			<div class="aspect-video overflow-hidden">
+				<Image
+					src={heroImage}
+					alt={title}
+					width={featured ? 960 : 480}
+					height={featured ? 480 : 240}
+					class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+				/>
+			</div>
+		)}
+		<div class="p-5 sm:p-6">
+			{tags && tags.length > 0 && (
+				<div class="mb-3 flex flex-wrap gap-2">
+					{tags.map((tag: string) => (
+						<span class="inline-flex items-center rounded-full bg-primary-50 px-2.5 py-0.5 text-xs font-medium text-primary-700 dark:bg-primary-900/30 dark:text-primary-300">
+							{tag}
+						</span>
+					))}
+				</div>
+			)}
+			<h3 class:list={[
+				'font-bold text-surface-900 transition-colors group-hover:text-primary-600 dark:text-surface-50 dark:group-hover:text-primary-400',
+				featured ? 'text-xl sm:text-2xl' : 'text-lg'
+			]}>
+				{title}
+			</h3>
+			<p class="mt-2 line-clamp-2 text-sm text-surface-500 dark:text-surface-400">
+				{description}
+			</p>
+			<div class="mt-4 text-xs text-surface-400 dark:text-surface-500">
+				<FormattedDate date={pubDate} />
+			</div>
+		</div>
+	</a>
+</article>

@@ -1,0 +1,88 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Header from '../../components/Header.astro';
+import { SITE_TITLE } from '../../consts';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const allTags = [...new Set(posts.flatMap(post => post.data.tags))];
+---
+
+<!doctype html>
+<html lang="ko">
+	<head>
+		<BaseHead title={`블로그 | ${SITE_TITLE}`} description="건설산업, AI, 바이브코딩에 대한 글 모음" />
+	</head>
+	<body>
+		<Header />
+		<main class="mx-auto max-w-xl px-4 py-8">
+			<h1 class="text-2xl font-bold mb-1">블로그</h1>
+			<p class="text-sm text-[--color-ink-muted] dark:text-[--color-dark-ink-muted] mb-6">건설산업 × AI × 바이브코딩 이야기</p>
+
+			<!-- Tags -->
+			{allTags.length > 0 && (
+				<div class="mb-6 flex flex-wrap gap-1.5">
+					<button data-tag="all" class="tag-filter active text-xs px-2.5 py-1 rounded border border-[--color-link] text-[--color-link] dark:border-[--color-dark-link] dark:text-[--color-dark-link]">전체</button>
+					{allTags.map(tag => (
+						<button data-tag={tag} class="tag-filter text-xs px-2.5 py-1 rounded border border-[--color-border] text-[--color-ink-muted] hover:border-[--color-link] hover:text-[--color-link] dark:border-[--color-dark-border] dark:text-[--color-dark-ink-muted] dark:hover:border-[--color-dark-link] dark:hover:text-[--color-dark-link] transition-colors">{tag}</button>
+					))}
+				</div>
+			)}
+
+			<!-- Posts -->
+			<ul class="space-y-5" id="posts-list">
+				{posts.map((post) => (
+					<li data-tags={JSON.stringify(post.data.tags)}>
+						<a href={`/blog/${post.id}/`} class="group block no-underline">
+							<h3 class="text-[15px] font-medium text-[--color-ink] group-hover:text-[--color-link] dark:text-[--color-dark-ink] dark:group-hover:text-[--color-dark-link] transition-colors">
+								{post.data.title}
+							</h3>
+							<div class="mt-0.5 text-xs text-[--color-ink-faint] dark:text-[--color-dark-ink-faint]">
+								<FormattedDate date={post.data.pubDate} />
+								{post.data.tags.length > 0 && (
+									<span class="ml-2">{post.data.tags.join(' · ')}</span>
+								)}
+							</div>
+							<p class="mt-1 text-sm text-[--color-ink-muted] dark:text-[--color-dark-ink-muted] leading-relaxed">
+								{post.data.description}
+							</p>
+						</a>
+					</li>
+				))}
+			</ul>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<script>
+	const tagButtons = document.querySelectorAll('.tag-filter');
+	const postItems = document.querySelectorAll('#posts-list > li');
+
+	tagButtons.forEach(btn => {
+		btn.addEventListener('click', () => {
+			const tag = btn.getAttribute('data-tag');
+
+			tagButtons.forEach(b => {
+				b.classList.remove('border-[--color-link]', 'text-[--color-link]', 'dark:border-[--color-dark-link]', 'dark:text-[--color-dark-link]');
+				b.classList.add('border-[--color-border]', 'text-[--color-ink-muted]', 'dark:border-[--color-dark-border]', 'dark:text-[--color-dark-ink-muted]');
+			});
+			btn.classList.remove('border-[--color-border]', 'text-[--color-ink-muted]', 'dark:border-[--color-dark-border]', 'dark:text-[--color-dark-ink-muted]');
+			btn.classList.add('border-[--color-link]', 'text-[--color-link]', 'dark:border-[--color-dark-link]', 'dark:text-[--color-dark-link]');
+
+			postItems.forEach(item => {
+				if (tag === 'all') {
+					(item as HTMLElement).style.display = '';
+				} else {
+					const tags = JSON.parse(item.getAttribute('data-tags') || '[]');
+					(item as HTMLElement).style.display = tags.includes(tag) ? '' : 'none';
+				}
+			});
+		});
+	});
+</script>
