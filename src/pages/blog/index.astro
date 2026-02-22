@@ -20,37 +20,40 @@ const allTags = [...new Set(posts.flatMap(post => post.data.tags))];
 	</head>
 	<body>
 		<Header />
-		<main class="mx-auto max-w-xl px-4 py-8">
-			<h1 class="text-2xl font-bold mb-1">블로그</h1>
-			<p class="text-sm text-[--color-ink-muted] dark:text-[--color-dark-ink-muted] mb-6">건설산업 × AI × 바이브코딩 이야기</p>
+		<main class="mx-auto max-w-xl px-4 py-12 sm:py-20">
+			<h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">Logs</h1>
+			<p class="text-[15px] text-[--color-ink-muted] dark:text-[--color-dark-ink-muted] mb-10 leading-relaxed">건설 산업, AI 기술, 그리고 바이브코딩에 관한 잡다한 기록들입니다.</p>
 
 			<!-- Tags -->
 			{allTags.length > 0 && (
-				<div class="mb-6 flex flex-wrap gap-1.5">
-					<button data-tag="all" class="tag-filter active text-xs px-2.5 py-1 rounded border border-[--color-link] text-[--color-link] dark:border-[--color-dark-link] dark:text-[--color-dark-link]">전체</button>
+				<div class="mb-10 flex flex-wrap gap-2">
+					<button data-tag="all" class="tag-filter active text-[12px] font-medium px-3 py-1.5 rounded-full border border-[--color-link] text-[--color-surface] bg-[--color-link] dark:border-[--color-dark-link] dark:text-[--color-dark-surface] dark:bg-[--color-dark-link] transition-all">All</button>
 					{allTags.map(tag => (
-						<button data-tag={tag} class="tag-filter text-xs px-2.5 py-1 rounded border border-[--color-border] text-[--color-ink-muted] hover:border-[--color-link] hover:text-[--color-link] dark:border-[--color-dark-border] dark:text-[--color-dark-ink-muted] dark:hover:border-[--color-dark-link] dark:hover:text-[--color-dark-link] transition-colors">{tag}</button>
+						<button data-tag={tag} class="tag-filter text-[12px] font-medium px-3 py-1.5 rounded-full border border-[--color-border] text-[--color-ink-muted] hover:border-[--color-link] hover:text-[--color-link] dark:border-[--color-dark-border] dark:text-[--color-dark-ink-muted] dark:hover:border-[--color-dark-link] dark:hover:text-[--color-dark-link] transition-all bg-transparent">{tag}</button>
 					))}
 				</div>
 			)}
 
 			<!-- Posts -->
-			<ul class="space-y-5" id="posts-list">
+			<ul class="space-y-4" id="posts-list">
 				{posts.map((post) => (
 					<li data-tags={JSON.stringify(post.data.tags)}>
-						<a href={`/blog/${post.id}/`} class="group block no-underline">
-							<h3 class="text-[15px] font-medium text-[--color-ink] group-hover:text-[--color-link] dark:text-[--color-dark-ink] dark:group-hover:text-[--color-dark-link] transition-colors">
+						<a href={`/blog/${post.id}/`} class="group block no-underline p-5 -mx-5 rounded-2xl transition-all duration-300 hover:bg-[--color-surface-alt] dark:hover:bg-[--color-dark-surface-alt] hover:scale-[1.01] hover:shadow-sm active:scale-[0.99] border border-transparent hover:border-[--color-border] dark:hover:border-[--color-dark-border]">
+							<h3 class="text-[17px] font-bold text-[--color-ink] group-hover:text-[--color-link] dark:text-[--color-dark-ink] dark:group-hover:text-[--color-dark-link] tracking-tight mb-1 transition-colors">
 								{post.data.title}
 							</h3>
-							<div class="mt-0.5 text-xs text-[--color-ink-faint] dark:text-[--color-dark-ink-faint]">
-								<FormattedDate date={post.data.pubDate} />
-								{post.data.tags.length > 0 && (
-									<span class="ml-2">{post.data.tags.join(' · ')}</span>
-								)}
-							</div>
-							<p class="mt-1 text-sm text-[--color-ink-muted] dark:text-[--color-dark-ink-muted] leading-relaxed">
+							<p class="text-[14px] text-[--color-ink-muted] dark:text-[--color-dark-ink-muted] leading-relaxed line-clamp-2 mb-3">
 								{post.data.description}
 							</p>
+							<div class="text-[13px] font-mono text-[--color-ink-faint] dark:text-[--color-dark-ink-faint] flex items-center gap-2">
+								<FormattedDate date={post.data.pubDate} />
+								{post.data.tags && post.data.tags.length > 0 && (
+									<>
+										<span class="opacity-50">•</span>
+										<span class="truncate">{post.data.tags[0]}</span>
+									</>
+								)}
+							</div>
 						</a>
 					</li>
 				))}
@@ -69,11 +72,11 @@ const allTags = [...new Set(posts.flatMap(post => post.data.tags))];
 			const tag = btn.getAttribute('data-tag');
 
 			tagButtons.forEach(b => {
-				b.classList.remove('border-[--color-link]', 'text-[--color-link]', 'dark:border-[--color-dark-link]', 'dark:text-[--color-dark-link]');
-				b.classList.add('border-[--color-border]', 'text-[--color-ink-muted]', 'dark:border-[--color-dark-border]', 'dark:text-[--color-dark-ink-muted]');
+				b.classList.remove('border-[--color-link]', 'text-[--color-surface]', 'bg-[--color-link]', 'dark:border-[--color-dark-link]', 'dark:text-[--color-dark-surface]', 'dark:bg-[--color-dark-link]');
+				b.classList.add('border-[--color-border]', 'text-[--color-ink-muted]', 'bg-transparent', 'dark:border-[--color-dark-border]', 'dark:text-[--color-dark-ink-muted]');
 			});
-			btn.classList.remove('border-[--color-border]', 'text-[--color-ink-muted]', 'dark:border-[--color-dark-border]', 'dark:text-[--color-dark-ink-muted]');
-			btn.classList.add('border-[--color-link]', 'text-[--color-link]', 'dark:border-[--color-dark-link]', 'dark:text-[--color-dark-link]');
+			btn.classList.remove('border-[--color-border]', 'text-[--color-ink-muted]', 'bg-transparent', 'dark:border-[--color-dark-border]', 'dark:text-[--color-dark-ink-muted]');
+			btn.classList.add('border-[--color-link]', 'text-[--color-surface]', 'bg-[--color-link]', 'dark:border-[--color-dark-link]', 'dark:text-[--color-dark-surface]', 'dark:bg-[--color-dark-link]');
 
 			postItems.forEach(item => {
 				if (tag === 'all') {

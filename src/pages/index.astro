@@ -20,42 +20,52 @@ const latestPosts = posts.slice(0, 10);
 	</head>
 	<body>
 		<Header />
-		<main class="mx-auto max-w-xl px-4 py-8">
-			<!-- Intro -->
-			<section class="mb-2">
-				<h1 class="text-2xl font-bold mb-3">건설 현장에 AI를 입히다</h1>
-				<p class="text-[--color-ink-muted] dark:text-[--color-dark-ink-muted] leading-relaxed">
-					건설 엔지니어가 AI와 바이브코딩으로 현장의 문제를 해결하는 과정을 기록합니다.
+		<main class="mx-auto max-w-xl px-4 py-12 sm:py-20">
+			<!-- Cinematic Intro -->
+			<section class="mb-16">
+				<h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4 text-transparent bg-clip-text bg-gradient-to-br from-gray-900 to-gray-500 dark:from-white dark:to-gray-500">
+					건설 현장에 AI를 입히다
+				</h1>
+				<p class="text-[16px] sm:text-[17px] text-[--color-ink-light] dark:text-[--color-dark-ink-light] leading-relaxed max-w-[90%] font-medium">
+					건설 엔지니어가 <span class="text-[--color-ink] dark:text-[--color-dark-ink] font-semibold">AI</span>와 <span class="text-[--color-ink] dark:text-[--color-dark-ink] font-semibold">바이브코딩</span>으로 현장의 불합리한 문제를 해결하는 기록입니다.
 				</p>
 			</section>
 
-			<hr />
-
-			<!-- Recent Posts -->
+			<!-- Recent Posts (Premium Cards) -->
 			<section>
-				<div class="flex items-center justify-between mb-4">
-					<h2 class="text-base font-semibold">최신 글</h2>
-					<a href="/blog" class="text-xs text-[--color-ink-faint] hover:text-[--color-link] dark:text-[--color-dark-ink-faint] dark:hover:text-[--color-dark-link] no-underline">전체 보기 →</a>
+				<div class="flex items-center justify-between mb-6 px-1">
+					<h2 class="text-sm font-semibold tracking-wide uppercase text-[--color-ink-muted] dark:text-[--color-dark-ink-muted]">Latest Logs</h2>
+					<a href="/blog" class="text-xs font-medium text-[--color-ink-faint] hover:text-[--color-ink] dark:text-[--color-dark-ink-faint] dark:hover:text-[--color-dark-ink] transition-colors no-underline">
+						View All →
+					</a>
 				</div>
-				<ul class="space-y-5">
+				<ul class="space-y-4">
 					{latestPosts.map((post) => (
 						<li>
-							<a href={`/blog/${post.id}/`} class="group block no-underline">
-								<h3 class="text-[15px] font-medium text-[--color-ink] group-hover:text-[--color-link] dark:text-[--color-dark-ink] dark:group-hover:text-[--color-dark-link] transition-colors">
+							<a href={`/blog/${post.id}/`} class="group block no-underline p-5 -mx-5 rounded-2xl transition-all duration-300 hover:bg-[--color-surface-alt] dark:hover:bg-[--color-dark-surface-alt] hover:scale-[1.01] hover:shadow-sm active:scale-[0.99] border border-transparent hover:border-[--color-border] dark:hover:border-[--color-dark-border]">
+								<h3 class="text-[17px] font-bold text-[--color-ink] group-hover:text-[--color-link] dark:text-[--color-dark-ink] dark:group-hover:text-[--color-dark-link] tracking-tight mb-1 transition-colors">
 									{post.data.title}
 								</h3>
-								<div class="mt-0.5 text-xs text-[--color-ink-faint] dark:text-[--color-dark-ink-faint]">
-									<FormattedDate date={post.data.pubDate} />
-								</div>
-								<p class="mt-1 text-sm text-[--color-ink-muted] dark:text-[--color-dark-ink-muted] leading-relaxed line-clamp-2">
+								<p class="text-[14px] text-[--color-ink-muted] dark:text-[--color-dark-ink-muted] leading-relaxed line-clamp-2 mb-3">
 									{post.data.description}
 								</p>
+								<div class="text-[13px] font-mono text-[--color-ink-faint] dark:text-[--color-dark-ink-faint] flex items-center gap-2">
+									<FormattedDate date={post.data.pubDate} />
+									{post.data.tags && post.data.tags.length > 0 && (
+										<>
+											<span class="opacity-50">•</span>
+											<span class="truncate">{post.data.tags[0]}</span>
+										</>
+									)}
+								</div>
 							</a>
 						</li>
 					))}
 				</ul>
 			</section>
 		</main>
-		<Footer />
+		<div class="border-t border-[--color-border] dark:border-[--color-dark-border]">
+			<Footer />
+		</div>
 	</body>
 </html>

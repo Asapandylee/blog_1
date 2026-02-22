@@ -9,9 +9,9 @@ const navLinks = [
 ];
 ---
 
-<header class="mx-auto max-w-xl px-4 pt-8 pb-0">
-	<nav class="flex items-center justify-between">
-		<a href="/" class="text-lg font-bold text-[--color-ink] no-underline hover:text-[--color-link] dark:text-[--color-dark-ink] dark:hover:text-[--color-dark-link]">
+<header class="sticky top-0 z-50 w-full backdrop-blur-lg bg-[--color-surface]/80 dark:bg-[--color-dark-surface]/80 border-b border-[--color-border] dark:border-[--color-dark-border]">
+	<div class="mx-auto max-w-xl px-4 py-4 flex items-center justify-between transition-colors duration-300">
+		<a href="/" class="text-[17px] font-bold tracking-tight text-[--color-ink] no-underline hover:opacity-80 transition-opacity dark:text-[--color-dark-ink]">
 			{SITE_TITLE}
 		</a>
 		<div class="flex items-center gap-4">
@@ -42,10 +42,8 @@ const navLinks = [
 				</svg>
 			</button>
 		</div>
-	</nav>
-	<hr class="mt-4" />
+	</div>
 </header>
-
 <script>
 	const toggle = document.getElementById('theme-toggle');
 	toggle?.addEventListener('click', () => {
