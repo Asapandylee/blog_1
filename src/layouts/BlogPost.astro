@@ -6,9 +6,9 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & { readingTime?: number };
 
-const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, tags, readingTime } = Astro.props;
 ---
 
 <!doctype html>
@@ -29,26 +29,33 @@ const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.prop
 
 				<h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight mb-4">{title}</h1>
 
-				<div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-[13px] font-mono text-[--color-ink-faint] dark:text-[--color-dark-ink-faint] mb-10">
+				<div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-[13px] font-mono text-[--color-ink-faint] dark:text-[--color-dark-ink-faint] mb-4">
 					<div class="flex items-center gap-1">
 						<FormattedDate date={pubDate} />
 						{updatedDate && (
 							<span class="opacity-70">(Updated <FormattedDate date={updatedDate} />)</span>
 						)}
 					</div>
-					{tags && tags.length > 0 && (
-						<div class="flex items-center gap-2">
+					{readingTime && (
+						<>
 							<span class="opacity-30">|</span>
-							<div class="flex gap-2">
-								{tags.map((tag) => (
-									<span class="px-2 py-0.5 rounded-full bg-[--color-surface-alt] dark:bg-[--color-dark-surface-alt] border border-[--color-border] dark:border-[--color-dark-border] text-[11px] tracking-wide uppercase">
-										{tag}
-									</span>
-								))}
-							</div>
-						</div>
+							<span>{readingTime}분 분량</span>
+						</>
 					)}
 				</div>
+
+				{tags && tags.length > 0 && (
+					<div class="flex flex-wrap gap-2 mb-8">
+						{tags.map((tag) => (
+							<span class="px-2.5 py-1 rounded-full bg-[--color-surface-alt] dark:bg-[--color-dark-surface-alt] border border-[--color-border] dark:border-[--color-dark-border] text-[11px] font-medium tracking-wide uppercase text-[--color-ink-muted] dark:text-[--color-dark-ink-muted]">
+								{tag}
+							</span>
+						))}
+					</div>
+				)}
+
+				<!-- Subtle divider before content -->
+				<div class="mb-10 border-t border-[--color-border] dark:border-[--color-dark-border] opacity-50"></div>
 
 				{heroImage && (
 					<div class="mb-6">

@@ -1,0 +1,87 @@
+{
+  "version": "2.0",
+  "lastUpdated": "2026-02-24T01:06:14.572Z",
+  "activeFeatures": [
+    "blog_1",
+    "blog",
+    "layouts"
+  ],
+  "primaryFeature": "blog_1",
+  "features": {
+    "blog_1": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-02-24T01:05:10.330Z",
+        "lastUpdated": "2026-02-24T01:05:10.330Z"
+      },
+      "lastFile": "/Users/andy/Projects/coding/blog_1/src/pages/index.astro"
+    },
+    "blog": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-02-24T01:05:41.138Z",
+        "lastUpdated": "2026-02-24T01:06:14.572Z"
+      },
+      "lastFile": "/Users/andy/Projects/coding/blog_1/src/pages/blog/[...slug].astro"
+    },
+    "layouts": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-02-24T01:05:59.619Z",
+        "lastUpdated": "2026-02-24T01:05:59.619Z"
+      },
+      "lastFile": "/Users/andy/Projects/coding/blog_1/src/layouts/BlogPost.astro"
+    }
+  },
+  "pipeline": {
+    "currentPhase": 1,
+    "level": "Dynamic",
+    "phaseHistory": []
+  },
+  "session": {
+    "startedAt": "2026-02-24T00:55:25.127Z",
+    "onboardingCompleted": false,
+    "lastActivity": "2026-02-24T01:06:14.572Z"
+  },
+  "history": [
+    {
+      "timestamp": "2026-02-24T01:05:10.330Z",
+      "feature": "blog_1",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-24T01:05:41.138Z",
+      "feature": "blog",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-24T01:05:59.619Z",
+      "feature": "layouts",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-24T01:06:14.572Z",
+      "feature": "blog",
+      "phase": "do",
+      "action": "updated"
+    }
+  ]
+}

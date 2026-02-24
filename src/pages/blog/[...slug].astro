@@ -12,9 +12,13 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
-const { Content } = await render(post);
+const { Content, remarkPluginFrontmatter } = await render(post);
+
+// Calculate reading time (~500 chars per minute for Korean)
+const body = post.body || '';
+const readingTime = Math.max(1, Math.ceil(body.length / 500));
 ---
 
-<BlogPost {...post.data}>
+<BlogPost {...post.data} readingTime={readingTime}>
 	<Content />
 </BlogPost>
